@@ -28,7 +28,7 @@ model Book {
   isbn      String
   pages     Int
   available Boolean
-  Genre     String
+  genr      String
   orders    Order[]
 }
 
