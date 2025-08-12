@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "My first express app",
   "main": "index.js",
-  "type": "module",
+  
+  "prisma": {
+     "seed": "node ./prisma/seed.js"
+  },
   "scripts": {
     "dev": "nodemon index.js"
   },
