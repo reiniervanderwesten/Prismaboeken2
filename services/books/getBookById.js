@@ -1,7 +1,17 @@
-import bookData from '../../data/books.json' with { type: 'json' }
 
-const getBookById = (id) => {
-  return bookData.books.find((book) => book.id === id)
+import { PrismaClient } from '@prisma/client'
+
+const getBookById = async (id) => {
+  const prisma = new PrismaClient()
+  const book = await prisma.book.findUnique({
+    where: {
+      id
+    }
+  })
+
+  
+  return book
 }
 
-export default getBookById
+
+export default getBookById    

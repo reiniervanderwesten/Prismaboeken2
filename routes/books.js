@@ -30,21 +30,18 @@ router.post('/', authMiddleware, (req, res) => {
   //}
 })
 
-router.get('/:id', (req, res) => {
-  try {
-    const { id } = req.params
-    const book = getBookById(id)
+router.get(
+  '/:id',
+  async (req, res, next) => {
+    
+      const { id } = req.params
+      const book = await getBookById(id)
 
-    if (!book) {
-      res.status(404).send(`Book with id ${id} was not found!`)
-    } else {
       res.status(200).json(book)
-    }
-  } catch (error) {
-    console.error(error)
-    res.status(500).send('Something went wrong while getting book by id!')
-  }
-})
+    
+  },
+  
+)
 
 router.put('/:id', authMiddleware, (req, res) => {
   try {
