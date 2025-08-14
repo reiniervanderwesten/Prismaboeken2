@@ -1,6 +1,8 @@
 import { PrismaClient } from '@prisma/client'
 import bookData from '../data/books.json' with { type: 'json' }
 import userData from '../data/users.json' with { type: 'json' }
+import orderData from '../data/orders.json' with { type: 'json' }
+
 
 
 const prisma = new PrismaClient({ log: ['query', 'info', 'warn', 'error'] })
@@ -9,6 +11,7 @@ const prisma = new PrismaClient({ log: ['query', 'info', 'warn', 'error'] })
 async function main () {
   const { books } = bookData
   const { users } = userData
+  const { orders } = orderData;
 
 
   for (const book of books) {
@@ -18,13 +21,24 @@ async function main () {
       create: book
     })
   }
-   for (const user of users) {
+
+  for (const user of users) {
     await prisma.user.upsert({
       where: { id: user.id },
       update: {},
       create: user
     })
   }
+  
+  for (const order of orders) {
+    await prisma.order.upsert({
+      where: { id: order.id },
+      update: {},
+      create: order
+    })
+  }  
+
+  
 }
 
 
