@@ -1,6 +1,7 @@
 import express from 'express'
 import booksRouter from './routes/books.js'
 import recordsRouter from './routes/records.js'
+import userRouter from './routes/users.js'
 import loginRouter from './routes/login.js'
 import log from './middleware/logMiddleware.js'
 import 'dotenv/config'
@@ -27,6 +28,7 @@ app.use(log)
 app.use('/books', booksRouter)
 app.use('/records', recordsRouter)
 app.use('/login', loginRouter)
+app.use('/users', userRouter)
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
