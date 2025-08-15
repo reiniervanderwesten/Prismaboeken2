@@ -40,25 +40,30 @@ router.get(
   
 )
 
-router.put('/:id', authMiddleware, (req, res) => {
-  try {
-    const { id } = req.params
-    const { title, author, isbn, pages, available, genre } = req.body
-    const updatedBook = updateBookById(
-      id,
-      title,
-      author,
-      isbn,
-      pages,
-      available,
-      genre
-    )
-    res.status(200).json(updatedBook)
-  } catch (error) {
-    console.error(error)
-    res.status(500).send('Something went wrong while updating book by id!')
-  }
-})
+router.put(
+  '/:id',
+  authMiddleware,
+  async (req, res, next) => {
+    try {
+      const { id } = req.params
+      const { title, author, isbn, pages, available, genre } = req.body
+      const updatedBook = await updateBookById(
+        id,
+        title,
+        author,
+        isbn,
+        pages,
+        available,
+        genre
+      )
+      res.status(200).json(updatedBook)
+    } catch (error) {
+      next(error)
+    }
+  },
+  
+)
+
 
 router.delete(
   '/:id',
