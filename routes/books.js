@@ -6,7 +6,7 @@ import getBookById from '../services/books/getBookById.js'
 import updateBookById from '../services/books/updateBookById.js'
 import deleteBook from '../services/books/deleteBook.js'
 
-import authMiddleware from '../middleware/advancedAuth.js'
+import authMiddleware from '../middleware/auth.js'
 
 
 
@@ -19,7 +19,7 @@ router.get('/', async (req, res) => {
 })
 
 
-router.post('/', authMiddleware, async (req, res) => {
+router.post('/',  authMiddleware, async (req, res) => {
   const { title, author, isbn, pages, available, genre } = req.body
   const newBook = await createBook(title, author, isbn, pages, available, genre)
   res.status(201).json(newBook)
