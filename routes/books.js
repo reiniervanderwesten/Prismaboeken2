@@ -60,22 +60,25 @@ router.put('/:id', authMiddleware, (req, res) => {
   }
 })
 
-router.delete('/:id', authMiddleware, (req, res) => {
-  try {
-    const { id } = req.params
-    const deletedBookId = deleteBook(id)
+router.delete(
+  '/:id',
+  authMiddleware,
+  
+  async (req, res, next) => {
+    try {
+      const { id } = req.params
+      const deletedBookId = await deleteBook(id)
 
-    if (!deletedBookId) {
-      res.status(404).send(`Book with id ${id} was not found!`)
-    } else {
+
       res.status(200).json({
         message: `Book with id ${deletedBookId} was deleted!`
       })
+    } catch (error) {
+      next(error)
     }
-  } catch (error) {
-    console.error(error)
-    res.status(500).send('Something went wrong while deleting book by id!')
-  }
-})
+  },
+  
+)
+
 
 export default router

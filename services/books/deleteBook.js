@@ -1,14 +1,20 @@
-import bookData from '../../data/books.json' with { type: 'json' }
+import { PrismaClient } from '@prisma/client'
 
-const deleteBook = (id) => {
-  const index = bookData.books.findIndex((book) => book.id === id)
 
-  if (index === -1) {
-    return null
-  }
+const deleteBook = async (id) => {
+  const prisma = new PrismaClient()
 
-  bookData.books.splice(index, 1)
+
+  const deleteBook = await prisma.book.deleteMany({
+    where: {
+      id
+    }
+  })
+
+  
+
   return id
 }
-
 export default deleteBook
+
+
