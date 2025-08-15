@@ -19,16 +19,13 @@ router.get('/', async (req, res) => {
 })
 
 
-router.post('/', authMiddleware, (req, res) => {
-  //try {
-    const { title, author, isbn, pages, available, genre } = req.body
-    const newBook = createBook(title, author, isbn, pages, available, genre)
-    res.status(201).json(newBook)
-  //} catch (error) {
-    //console.error(error)
-    //res.status(500).send('Something went wrong while creating new book!')
-  //}
+router.post('/', authMiddleware, async (req, res) => {
+  const { title, author, isbn, pages, available, genre } = req.body
+  const newBook = await createBook(title, author, isbn, pages, available, genre)
+  res.status(201).json(newBook)
 })
+
+
 
 router.get(
   '/:id',
