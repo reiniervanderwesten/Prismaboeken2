@@ -2,6 +2,8 @@ import { PrismaClient } from '@prisma/client'
 import bookData from '../data/books.json' with { type: 'json' }
 import userData from '../data/users.json' with { type: 'json' }
 import orderData from '../data/orders.json' with { type: 'json' }
+import recordData from '../data/records.json' with { type: 'json' }
+
 
 
 
@@ -29,6 +31,19 @@ async function main () {
       create: user
     })
   }
+
+  // First destructure recordData
+const { records } = recordData;
+
+// Then loop through records
+for (const record of records) {
+  await prisma.record.upsert({
+    where: { id: record.id },
+    update: {},
+    create: record
+  })
+}
+
   
   for (const order of orders) {
     await prisma.order.upsert({
